@@ -1,29 +1,45 @@
 function showAlertSuccess() {
-    document.getElementById("alert-success").classList.add("show");
+  const alert = document.getElementById("alert-success");
+  alert.classList.add("show");
+
+  // Se agrega un mensaje de success
+  alert.querySelector("p").textContent = "Datos correctos. Redirigiendo...";
 }
 
-function showAlertError() {
-    document.getElementById("alert-danger").classList.add("show");
+function showAlertError(msg) {
+  const alert = document.getElementById("alert-danger");
+  alert.classList.add("show");
+
+  // Se agrega un mensaje de error personalizado
+  alert.querySelector("p").textContent = msg;
 }
 
-document.getElementById("regBtn").addEventListener("click", function() {
-    let nombre = document.getElementById("nombre").value.trim();
-    let apellido = document.getElementById("apellido").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let contra1 = document.getElementById("password1").value;
-    let contra2 = document.getElementById("password2").value;
-    let terminos = document.getElementById("terminos").checked;
-    
-    if (
-    nombre !== "" &&
-    apellido !== "" &&
-    email !== "" &&
-    contra1.length >= 6 &&
-    contra2 === contra1 &&
-    terminos
-) {
-   showAlertSuccess(); 
-} else {
-    showAlertError();
-    }
+document.getElementById("ingBtn").addEventListener("click", function() {
+  let usuario = document.getElementById("usuario").value.trim();
+  let password = document.getElementById("password").value.trim();
+  let terminos = document.getElementById("terminos").checked;
+
+  // Validaciones de campos
+  if (usuario === "") {
+    showAlertError("El campo Usuario es obligatorio.");
+    return;
+  }
+
+  if (password === "") {
+    showAlertError("El campo Contraseña es obligatorio.");
+    return;
+  }
+
+  if (!terminos) {
+    showAlertError("Debe aceptar los términos y condiciones.");
+    return;
+  }
+
+  // Si pasa todas las validaciones
+  showAlertSuccess();
+
+  // Redirigir después de 1.5 segundos, para que se vea el mensaje de éxito
+  setTimeout(() => {
+    window.location.href = "products.html";
+  }, 1500);
 });
